@@ -1,22 +1,25 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import API_BASE_URL from '../config';
+import { apiLogin, apiRegister, getTokenUser } from '../lib/db';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem('ttm_token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const initAuth = async () => {
       if (token) {
         try {
-          const storedUser = JSON.parse(localStorage.getItem('user'));
-          if (storedUser) setUser(storedUser);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        } catch (error) {
+          const payload = await getTokenUser(token);
+          if (payload) {
+            const storedUser = JSON.parse(localStorage.getItem('ttm_user') || 'null');
+            if (storedUser) setUser(storedUser);
+          } else {
+            logout();
+          }
+        } catch {
           logout();
         }
       }
@@ -26,24 +29,22 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
-    setToken(res.data.token);
-    setUser(res.data.user);
-    localStorage.setItem('token', res.data.token);
-    localStorage.setItem('user', JSON.stringify(res.data.user));
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    const res = await apiLogin(email, password);
+    setToken(res.token);
+    setUser(res.user);
+    localStorage.setItem('ttm_token', res.token);
+    localStorage.setItem('ttm_user', JSON.stringify(res.user));
   };
 
   const register = async (name, email, password, role) => {
-    await axios.post(`${API_BASE_URL}/api/auth/register`, { name, email, password, role });
+    await apiRegister(name, email, password, role);
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('ttm_token');
+    localStorage.removeItem('ttm_user');
   };
 
   return (

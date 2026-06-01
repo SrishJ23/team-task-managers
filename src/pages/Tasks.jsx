@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import API_BASE_URL from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, Clock, Trash2, X } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
+import {
+  apiGetTasks,
+  apiGetProjects,
+  apiGetUsers,
+  apiCreateTask,
+  apiUpdateTaskStatus,
+  apiDeleteTask,
+} from '../lib/db';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -13,13 +19,11 @@ export default function Tasks() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Quick-add state per column
-  const [quickAdd, setQuickAdd] = useState(null); // 'Pending' | 'In Progress' | 'Completed'
+  const [quickAdd, setQuickAdd] = useState(null);
   const [quickTitle, setQuickTitle] = useState('');
   const [quickDescription, setQuickDescription] = useState('');
   const [quickDueDate, setQuickDueDate] = useState('');
 
-  // Full modal form state
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [projectId, setProjectId] = useState('');
@@ -28,20 +32,18 @@ export default function Tasks() {
 
   const { user } = useContext(AuthContext);
 
-  const fetchData = async () => {
+  const fetchData = () => {
     try {
-      const [tasksRes, projRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/tasks`),
-        axios.get(`${API_BASE_URL}/api/projects`),
-      ]);
-      setTasks(tasksRes.data);
-      setProjects(projRes.data);
-      if (projRes.data.length > 0) setProjectId(projRes.data[0].id);
+      const tasksData = apiGetTasks(user);
+      const projData = apiGetProjects();
+      setTasks(tasksData);
+      setProjects(projData);
+      if (projData.length > 0) setProjectId(projData[0].id);
 
       if (user?.role === 'Admin') {
-        const usersRes = await axios.get(`${API_BASE_URL}/api/users`);
-        setUsers(usersRes.data);
-        if (usersRes.data.length > 0) setAssignedTo(usersRes.data[0].id);
+        const usersData = apiGetUsers();
+        setUsers(usersData);
+        if (usersData.length > 0) setAssignedTo(usersData[0].id);
       }
     } catch {
       toast.error('Failed to fetch tasks');
@@ -50,21 +52,20 @@ export default function Tasks() {
     }
   };
 
-  useEffect(() => { fetchData(); }, [user]);
+  useEffect(() => { if (user) fetchData(); }, [user]);
 
-  // Quick-add: submits with defaults (first project, first user, today)
-  const handleQuickAdd = async (e) => {
+  const handleQuickAdd = (e) => {
     e.preventDefault();
     if (!quickTitle.trim()) return;
     const today = new Date().toISOString().split('T')[0];
     try {
-      await axios.post(`${API_BASE_URL}/api/tasks`, {
+      apiCreateTask({
         title: quickTitle.trim(),
         description: quickDescription.trim(),
         projectId: projects[0]?.id || '',
         assignedTo: users[0]?.id || '',
         dueDate: quickDueDate || today,
-      });
+      }, user);
       toast.success('Task added!');
       setQuickTitle('');
       setQuickDescription('');
@@ -76,10 +77,10 @@ export default function Tasks() {
     }
   };
 
-  const handleCreateTask = async (e) => {
+  const handleCreateTask = (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/api/tasks`, { title, description, projectId, assignedTo, dueDate });
+      apiCreateTask({ title, description, projectId, assignedTo, dueDate }, user);
       toast.success('Task created!');
       setIsModalOpen(false);
       setTitle(''); setDescription(''); setDueDate('');
@@ -89,17 +90,17 @@ export default function Tasks() {
     }
   };
 
-  const updateTaskStatus = async (taskId, newStatus) => {
+  const updateTaskStatus = (taskId, newStatus) => {
     try {
-      await axios.put(`${API_BASE_URL}/api/tasks/${taskId}`, { status: newStatus });
+      apiUpdateTaskStatus(taskId, newStatus, user);
       fetchData();
     } catch { toast.error('Failed to update task'); }
   };
 
-  const handleDeleteTask = async (taskId) => {
+  const handleDeleteTask = (taskId) => {
     if (!window.confirm('Delete this task?')) return;
     try {
-      await axios.delete(`${API_BASE_URL}/api/tasks/${taskId}`);
+      apiDeleteTask(taskId, user);
       fetchData();
       toast.success('Task deleted');
     } catch { toast.error('Failed to delete task'); }
@@ -164,7 +165,6 @@ export default function Tasks() {
 
   return (
     <div>
-      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '4px' }}>Tasks</h1>
@@ -178,7 +178,6 @@ export default function Tasks() {
         )}
       </div>
 
-      {/* Kanban Board */}
       <div className="kanban-board">
       {statuses.map((status) => {
           const colTasks = tasks.filter(t => t.status === status);
@@ -229,7 +228,6 @@ export default function Tasks() {
                 )}
               </div>
 
-              {/* Quick-add area — all users */}
               <div className="quick-add-area" style={{ display: isQuickAdding ? 'block' : 'none' }}>
                   <form className="quick-add-form" onSubmit={handleQuickAdd}>
                     <input
@@ -285,7 +283,6 @@ export default function Tasks() {
         })}
       </div>
 
-      {/* Full Create Task Modal */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setIsModalOpen(false)}>
           <div className="glass-panel modal-content">

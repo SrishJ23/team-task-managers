@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import API_BASE_URL from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, FolderKanban, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
+import { apiGetProjects, apiCreateProject } from '../lib/db';
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -15,25 +14,22 @@ export default function Projects() {
   
   const { user } = useContext(AuthContext);
 
-  const fetchProjects = async () => {
+  const fetchProjects = () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/projects`);
-      setProjects(res.data);
-    } catch (error) {
+      setProjects(apiGetProjects());
+    } catch {
       toast.error('Failed to fetch projects');
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  useEffect(() => { fetchProjects(); }, []);
 
-  const handleCreateProject = async (e) => {
+  const handleCreateProject = (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/api/projects`, { name, description });
+      apiCreateProject(name, description, user?.role);
       toast.success('Project created successfully');
       setIsModalOpen(false);
       setName('');

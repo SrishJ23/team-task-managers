@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import API_BASE_URL from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { format } from 'date-fns';
 import { AlertCircle, CheckCircle2, Clock, ListTodo, Plus, X } from 'lucide-react';
 import toast from 'react-hot-toast';
+import {
+  apiGetDashboard,
+  apiGetTasks,
+  apiGetProjects,
+  apiGetUsers,
+  apiCreateTask,
+} from '../lib/db';
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -24,15 +29,13 @@ export default function Dashboard() {
   const [assignedTo, setAssignedTo] = useState('');
   const [dueDate, setDueDate] = useState('');
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = () => {
     try {
-      const [metricsRes, tasksRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/dashboard`),
-        axios.get(`${API_BASE_URL}/api/tasks`)
-      ]);
-      setMetrics(metricsRes.data);
-      setAllTasks(tasksRes.data);
-      const sortedTasks = [...tasksRes.data]
+      const metricsData = apiGetDashboard(user);
+      const tasksData = apiGetTasks(user);
+      setMetrics(metricsData);
+      setAllTasks(tasksData);
+      const sortedTasks = [...tasksData]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 5);
       setRecentTasks(sortedTasks);
@@ -44,34 +47,23 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchDashboardData();
-  }, []);
+    if (user) fetchDashboardData();
+  }, [user]);
 
-  const openModal = async () => {
-    if (projects.length === 0) {
-      try {
-        const [projRes, usersRes] = await Promise.all([
-          axios.get(`${API_BASE_URL}/api/projects`),
-          axios.get(`${API_BASE_URL}/api/users`)
-        ]);
-        setProjects(projRes.data);
-        setUsers(usersRes.data);
-        if (projRes.data.length > 0) setProjectId(projRes.data[0].id);
-        if (usersRes.data.length > 0) setAssignedTo(usersRes.data[0].id);
-      } catch (error) {
-        toast.error('Failed to load projects/users');
-        return;
-      }
-    }
+  const openModal = () => {
+    const projData = apiGetProjects();
+    const usersData = apiGetUsers();
+    setProjects(projData);
+    setUsers(usersData);
+    if (projData.length > 0) setProjectId(projData[0].id);
+    if (usersData.length > 0) setAssignedTo(usersData[0].id);
     setIsModalOpen(true);
   };
 
-  const handleCreateTask = async (e) => {
+  const handleCreateTask = (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/api/tasks`, {
-        title, description, projectId, assignedTo, dueDate
-      });
+      apiCreateTask({ title, description, projectId, assignedTo, dueDate }, user);
       toast.success('Task created successfully!');
       setIsModalOpen(false);
       setTitle('');
