@@ -1,0 +1,34 @@
+0000000000000000000000000000000000000000 2e690c0be8ae63c1b32ac543f01efff86b6abbbd PUNIT YADAV <2puneetyadav@gmail.com> 1777571844 +0530	commit (initial): Initial commit: Team Task Manager with backend and frontend
+2e690c0be8ae63c1b32ac543f01efff86b6abbbd 2f0b46e1bb98bb824b2b60269203acf8ac71846e PUNIT YADAV <2puneetyadav@gmail.com> 1777572501 +0530	commit: 2nd
+2f0b46e1bb98bb824b2b60269203acf8ac71846e 7a51dabe50a02c6f08e1cfea5b580556dabbf672 PUNIT YADAV <2puneetyadav@gmail.com> 1777577570 +0530	commit: index.js
+7a51dabe50a02c6f08e1cfea5b580556dabbf672 5ddcc01a01b5937176a81c37d44d68d5dfbbdc18 PUNIT YADAV <2puneetyadav@gmail.com> 1777577728 +0530	commit: Add vercel.json for SPA routing
+5ddcc01a01b5937176a81c37d44d68d5dfbbdc18 ff0c6c978916995591f72f8fab9bcb5827ccb65a PUNIT YADAV <2puneetyadav@gmail.com> 1777578254 +0530	commit: Move frontend to root for Vercel deployment
+ff0c6c978916995591f72f8fab9bcb5827ccb65a 3af1f9357fd28b0016334189c2397a51002db58d PUNIT YADAV <2puneetyadav@gmail.com> 1777578688 +0530	commit: Update seed script to generate exactly 10 tasks
+3af1f9357fd28b0016334189c2397a51002db58d ba829fb33d641d8d40d0156aff61dadb8f6013f7 PUNIT YADAV <2puneetyadav@gmail.com> 1777579053 +0530	commit: extra space
+ba829fb33d641d8d40d0156aff61dadb8f6013f7 e1758392dcb30e10686b07559c0ef2ddeb736403 PUNIT YADAV <2puneetyadav@gmail.com> 1777579240 +0530	commit: Docs: Update README with accurate folder structure and portfolio details
+e1758392dcb30e10686b07559c0ef2ddeb736403 22937f14924e33183aaa0d1db5d723f891d786e6 PUNIT YADAV <2puneetyadav@gmail.com> 1777579379 +0530	commit: Docs: Add live demo link to README
+22937f14924e33183aaa0d1db5d723f891d786e6 2dfe2c0b48d4050d2db254bb96f815a1e57a0197 PUNIT YADAV <2puneetyadav@gmail.com> 1777579614 +0530	commit: .txt file
+2dfe2c0b48d4050d2db254bb96f815a1e57a0197 c55d55522fb069fea847871ca500f82ef1840f75 PUNIT YADAV <2puneetyadav@gmail.com> 1777603351 +0530	commit: Feature: Add task creation button and modal to Dashboard
+c55d55522fb069fea847871ca500f82ef1840f75 364e71309e9a2d5506f804b50438a54157c076d0 PUNIT YADAV <2puneetyadav@gmail.com> 1777603707 +0530	commit: Feature: Allow all users to add tasks on Tasks page
+364e71309e9a2d5506f804b50438a54157c076d0 a0d203d5d592ce12eda854106fb9e039fbce2897 PUNIT YADAV <2puneetyadav@gmail.com> 1777603996 +0530	commit: Fix: DB race condition, port consistency, missing CSS, status badges, responsive layout
+a0d203d5d592ce12eda854106fb9e039fbce2897 892d542d3f93ac6d74d5d609f4b6344b3af30425 PUNIT YADAV <2puneetyadav@gmail.com> 1777604382 +0530	commit: Config: Increase max task limit from 10 to 20
+892d542d3f93ac6d74d5d609f4b6344b3af30425 47f780292a0f63aca7c4bd7dd654bec53462ff20 PUNIT YADAV <2puneetyadav@gmail.com> 1777604603 +0530	commit: Remove: Add Task feature from Tasks page; revert to Admin-only creation
+47f780292a0f63aca7c4bd7dd654bec53462ff20 8a07252908dc6c6a4dd3cbc307750a19a2ba7471 PUNIT YADAV <2puneetyadav@gmail.com> 1777604956 +0530	commit: Redesign: warm charcoal+orange palette, DM Sans font, quick-add task in Kanban
+8a07252908dc6c6a4dd3cbc307750a19a2ba7471 b40d6c0091ec250cc44e950e6c08d0c8dbcc4af9 PUNIT YADAV <2puneetyadav@gmail.com> 1777605179 +0530	commit: Feature: Add + button to each Kanban column header for quick task creation
+b40d6c0091ec250cc44e950e6c08d0c8dbcc4af9 bb224246358d69dddf3d4062e519ba3f107b54f9 PUNIT YADAV <2puneetyadav@gmail.com> 1777605456 +0530	commit: Fix: Show + button to all users; allow Members to create tasks
+bb224246358d69dddf3d4062e519ba3f107b54f9 ee1f861b0bfe2bb9881bfff324d7953190207cbc PUNIT YADAV <2puneetyadav@gmail.com> 1777605699 +0530	commit: UI: Replace 'N/A' fallback with 'General' in Dashboard
+ee1f861b0bfe2bb9881bfff324d7953190207cbc 70c783c81b47a3772946b8627f29bca681ed88ce PUNIT YADAV <2puneetyadav@gmail.com> 1777605906 +0530	commit: Config: Increase max task limit to 100
+70c783c81b47a3772946b8627f29bca681ed88ce 9e8e1c34d03652cedfaeb01984c749495b6b7912 PUNIT YADAV <2puneetyadav@gmail.com> 1777606277 +0530	commit: Feature: Add description to quick-add task form
+9e8e1c34d03652cedfaeb01984c749495b6b7912 46ca885e7259642d33cad716b4fc47e5a4072ed1 PUNIT YADAV <2puneetyadav@gmail.com> 1777606433 +0530	commit: Feature: Allow all users to delete tasks (members can delete their own)
+46ca885e7259642d33cad716b4fc47e5a4072ed1 36d3ff4abe51dc6de25fddb97ebc300d4937583b PUNIT YADAV <2puneetyadav@gmail.com> 1777606572 +0530	commit: Feature: Add due date to quick-add task form
+36d3ff4abe51dc6de25fddb97ebc300d4937583b 20493d72d1d7fc27ac09d057afda506bc1b125cb PUNIT YADAV <2puneetyadav@gmail.com> 1777623728 +0530	commit: Deployment: Add build script for Render
+20493d72d1d7fc27ac09d057afda506bc1b125cb 3509ec9a6bbf8cf630d8de6855256c1a6d7aa09c PUNIT YADAV <2puneetyadav@gmail.com> 1777624218 +0530	commit: Deployment: Improve startup logging and bind to 0.0.0.0
+3509ec9a6bbf8cf630d8de6855256c1a6d7aa09c e3eb6a6c70a10a4e9a1de25e40665c65016019a3 PUNIT YADAV <2puneetyadav@gmail.com> 1777624712 +0530	commit: Deployment: Update fallback port to 8080
+e3eb6a6c70a10a4e9a1de25e40665c65016019a3 11acc7a700ea6f0fb603ee90a0de2b8ea57b7ecd PUNIT YADAV <2puneetyadav@gmail.com> 1777625133 +0530	commit: remove node_modules
+11acc7a700ea6f0fb603ee90a0de2b8ea57b7ecd 783d0e637fc7fad889a2a8d1c1b5b6ec5c5d5760 PUNIT YADAV <2puneetyadav@gmail.com> 1777625222 +0530	commit: Fix: Force sqlite3 to build from source for Render compatibility
+783d0e637fc7fad889a2a8d1c1b5b6ec5c5d5760 1c5cbd00329a0a3282997b6db459f011421cb1fe PUNIT YADAV <2puneetyadav@gmail.com> 1777625252 +0530	commit: first
+1c5cbd00329a0a3282997b6db459f011421cb1fe c75359f96aa9209229bd2cfffa403e1ea8ce63bd PUNIT YADAV <2puneetyadav@gmail.com> 1777625628 +0530	commit: Config: Update API_BASE_URL to live Render backend
+c75359f96aa9209229bd2cfffa403e1ea8ce63bd 45fda0078647a2ad59b9258c40b71fb647d38e62 PUNIT YADAV <2puneetyadav@gmail.com> 1777625751 +0530	commit: Docs: Update READMEs with live deployment URLs and new feature highlights
+45fda0078647a2ad59b9258c40b71fb647d38e62 f3d40a39b846e19d5461a2ec10e1d9fdf9f8f5d9 PUNIT YADAV <2puneetyadav@gmail.com> 1777626043 +0530	commit: Deployment: Add experimentalServices and cleanup redundant frontend folder
+f3d40a39b846e19d5461a2ec10e1d9fdf9f8f5d9 db7c3d1d9f505e2294e36255ef9146500504edf5 Shrasti Jaiswal <srishtijaiswal2306@gmail.com> 1780292857 +0530	commit: First
+db7c3d1d9f505e2294e36255ef9146500504edf5 b2c161303a7489d81243bf25a8e0cecc63407f0b Shrasti Jaiswal <srishtijaiswal2306@gmail.com> 1780294095 +0530	commit: First

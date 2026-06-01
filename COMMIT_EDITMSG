@@ -1,0 +1,26 @@
+First
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	deleted:    README.txt
+#	deleted:    backend/db.js
+#	deleted:    backend/index.js
+#	deleted:    backend/package-lock.json
+#	deleted:    backend/package.json
+#	deleted:    backend/seed.js
+#	deleted:    backend/test.js
+#	modified:   package.json
+#	new file:   src/README.md
+#	deleted:    src/config.js
+#	modified:   src/context/AuthContext.jsx
+#	new file:   src/lib/db.js
+#	modified:   src/pages/Dashboard.jsx
+#	modified:   src/pages/Projects.jsx
+#	modified:   src/pages/Tasks.jsx
+#	deleted:    video_assignment_script.md
+#
